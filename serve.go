@@ -64,6 +64,8 @@ func (c *conn) run(milter Milter) error {
 			if err := decode(data, &optNeg); err != nil {
 				return fmt.Errorf("error decoding options from server: %v", err)
 			}
+			optNeg.Version = 2
+			optNeg.Actions = 0x1f
 			optNeg.Protocol = 0
 			if err := c.writeResponse('O', encode(optNeg)); err != nil {
 				return err
